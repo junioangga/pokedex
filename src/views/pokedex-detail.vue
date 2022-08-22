@@ -1,5 +1,5 @@
 <template>
-  <div class="pokedex-detail">
+  <div class="pokedex-detail" :class="pokemonTypeColor">
     <loading v-model:active="loading" :is-full-page="fullPage" />
     <div class="container">
       <div class="columns is-mobile is-multiline">
@@ -7,6 +7,15 @@
           <div class="poke-header">
             <i class="mdi mdi-24px mdi-arrow-left" @click="clickBack()"></i>
             <h1>{{ capitalizer(this.$route.query.name) }}</h1>
+          </div>
+          <div class="poke-types">
+            <div
+              class="poke-types-bullets"
+              v-for="(type, m) in pokemonType"
+              :key="m"
+            >
+              {{ capitalizer(type.type.name) }}
+            </div>
           </div>
           <div class="detail-holder">
             <img
@@ -108,6 +117,8 @@ export default {
       flavorText: [],
       pokeStats: [],
       moveList: [],
+      pokemonTypeColor: "",
+      pokemonType: [],
     };
   },
   components: {
@@ -131,6 +142,8 @@ export default {
           this.pokemon = res.data;
           this.statFetch(res.data.stats);
           this.moveFetch(res.data.moves);
+          this.pokemonTypeColor = res.data.types[0].type.name;
+          this.pokemonType = res.data.types;
           axios
             .get(
               `https://pokeapi.co/api/v2/pokemon-species/${res.data.species.name}`
@@ -198,10 +211,82 @@ export default {
 .pokedex-detail {
   background: #000000;
   min-height: 100vh;
-  padding-bottom: 30px;
+  &.normal {
+    background: #a8a77a;
+  }
+  &.fire {
+    background: #ee8130;
+  }
+  &.water {
+    background: #6390f0;
+  }
+  &.electric {
+    background: #f7d02c;
+  }
+  &.grass {
+    background: #7ac74c;
+  }
+  &.ice {
+    background: #96d9d6;
+  }
+  &.fighting {
+    background: #c22e28;
+  }
+  &.poison {
+    background: #a33ea1;
+  }
+  &.ground {
+    background: #e2bf65;
+  }
+  &.flying {
+    background: #a98ff3;
+  }
+  &.psychic {
+    background: #f95587;
+  }
+  &.bug {
+    background: #a6b91a;
+  }
+  &.rock {
+    background: #b6a136;
+  }
+  &.ghost {
+    background: #735797;
+  }
+  &.dragon {
+    background: #6f35fc;
+  }
+  &.dark {
+    background: #705746;
+  }
+  &.steel {
+    background: #b7b7ce;
+  }
+  &.fairy {
+    background: #d685ad;
+  }
   .poke-header {
-    padding: 16px 16px 0;
+    padding: 16px;
     color: #ffffff;
+    i {
+      cursor: pointer;
+    }
+  }
+  .poke-types {
+    display: flex;
+    padding: 0 16px;
+    .poke-types-bullets {
+      padding: 5px 10px;
+      border: 1px solid #000000;
+      border-radius: 10px;
+      color: #ffffff;
+      font-weight: bold;
+      margin-right: 5px;
+      background: linear-gradient(
+        rgba(102, 102, 102, 0.7),
+        rgba(102, 102, 102, 0.1)
+      );
+    }
   }
   .detail-holder {
     position: relative;
@@ -220,7 +305,9 @@ export default {
   }
   .detail-tabs {
     background: white;
-    border-radius: 45px;
+
+    border-top-left-radius: 45px;
+    border-top-right-radius: 45px;
     padding-top: 30px;
     padding-bottom: 30px;
     .tabs {

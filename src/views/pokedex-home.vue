@@ -6,6 +6,7 @@
         <img alt="pokedex" src="../assets/pokedex.png" />
       </button>
       <div class="poke-header">
+        <img alt="pokemon" src="../assets/pokemon.png" />
         <div class="select">
           <select v-model="typeValue">
             <option
@@ -49,7 +50,11 @@
                 class="mdi mdi-close close"
                 @click="removeFavorite(fav.name)"
               ></span>
-              <div class="modal-section" @click="pokeDetailsPage(fav.name)">
+              <div
+                class="modal-section"
+                :class="fav.type"
+                @click="pokeDetailsPage(fav.name)"
+              >
                 <div class="image">
                   <img :src="fav.image" />
                 </div>
@@ -318,6 +323,12 @@ export default {
   position: relative;
   .poke-header {
     padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    img {
+      width: 100px;
+      height: auto;
+    }
   }
   .favButton {
     position: fixed;
@@ -362,6 +373,60 @@ export default {
       padding: 16px;
       position: relative;
       cursor: pointer;
+      &.normal {
+        background: #a8a77a;
+      }
+      &.fire {
+        background: #ee8130;
+      }
+      &.water {
+        background: #6390f0;
+      }
+      &.electric {
+        background: #f7d02c;
+      }
+      &.grass {
+        background: #7ac74c;
+      }
+      &.ice {
+        background: #96d9d6;
+      }
+      &.fighting {
+        background: #c22e28;
+      }
+      &.poison {
+        background: #a33ea1;
+      }
+      &.ground {
+        background: #e2bf65;
+      }
+      &.flying {
+        background: #a98ff3;
+      }
+      &.psychic {
+        background: #f95587;
+      }
+      &.bug {
+        background: #a6b91a;
+      }
+      &.rock {
+        background: #b6a136;
+      }
+      &.ghost {
+        background: #735797;
+      }
+      &.dragon {
+        background: #6f35fc;
+      }
+      &.dark {
+        background: #705746;
+      }
+      &.steel {
+        background: #b7b7ce;
+      }
+      &.fairy {
+        background: #d685ad;
+      }
       .image {
         width: 60px;
         height: 60px;
