@@ -1,26 +1,27 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
+<!-- <script setup>
+import { useQuery } from "@vue/apollo-composable";
+import gql from "graphql-tag";
+import { computed, watchEffect } from "vue";
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+const POKEMON_QUERY = gql`
+  query PokemonList {
+    pokemons(first: 150) {
+      name
+      classification
+      id
+      number
+      image
+      types
+    }
   }
-}
-</script>
+`;
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+const { result } = useQuery(POKEMON_QUERY);
+const pokemons = computed(() => result.value?.pokemons ?? []);
+
+watchEffect(() => {
+  console.log("pokemons", pokemons.value);
+});
+</script> -->
+
+<template><router-view /></template>
